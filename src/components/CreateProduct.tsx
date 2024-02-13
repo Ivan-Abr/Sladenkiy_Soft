@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {IProduct} from "../models";
 import axios from "axios";
+import {ErrorMessage} from "./ErrorMessage";
 
 
 const productData: IProduct = {
@@ -16,14 +17,27 @@ const productData: IProduct = {
 }
 
 
-export function CreateProduct(){
+interface CreateProductProps{
+    onCreate:(product : IProduct) => void
+}
+
+export function CreateProduct({onCreate}: CreateProductProps){
     const [value, setValue] = useState('')
+    const [error, setError] = useState('')
+
+
     const SubmitHandler = async (event: React.FormEvent)=>{
         event.preventDefault()
+        setError('')
+
+        if (value.trim().length === 0){
+            setError('Please Enter valid title.')
+            return
+        }
 
         productData.title = value
-
-        await axios.post<IProduct>('https://fakestoreapi.com/products', productData)
+        const response = await axios.post<IProduct>('https://fakestoreapi.com/products', productData)
+        onCreate(response.data)
     }
 
     // const changeHandler = (event : React.KeyboardEvent<HTMLInputElement>) => {
@@ -39,7 +53,7 @@ export function CreateProduct(){
             value = {value}
             onChange = {event => setValue(event.target.value)}
             />
-
+            {error && <ErrorMessage error={error}/>}
             <button type="submit" className="py-2 px-4 border bg-yellow-400 hover:text-white">Create</button>
 
         </form>
