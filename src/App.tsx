@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
-
 import {Product} from "./components/Product";
-import {products} from "./data/products";
 import {useProducts} from "./hooks/product";
 import {Loader} from "./components/Loader";
 import {ErrorMessage} from "./components/ErrorMessage";
 import {Modal} from "./components/Modal";
+import {CreateProduct} from "./components/CreateProduct";
 
 
 function App() {
@@ -17,7 +16,9 @@ function App() {
            {loading && <Loader/>}
            {error && <ErrorMessage error={error}/>}
            {products.map((product, index) => <Product product={product} key = {product.id}/>)}
-           <Modal/>
+           <Modal title="Create new product">
+               <CreateProduct/>
+           </Modal>
        </div>
    )
 
