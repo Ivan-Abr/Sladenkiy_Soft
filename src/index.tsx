@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import {Modal} from "./components/Modal";
+import {ModalState} from "./context/ModalContext";
 
 
 const root = ReactDOM.createRoot(
@@ -10,6 +12,9 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App />
+      <ModalState>
+          <App />
+      </ModalState>
+
   </React.StrictMode>
 )
