@@ -4,8 +4,15 @@ import OrgService from "../services/OrgService";
 import {IOrg} from "../models";
 import {Modal} from "./Modal";
 import {ModalContext} from "../context/ModalContext";
+import {CreateOrg} from "./CreateOrg";
 
 
+const example: IOrg ={
+    orgId:99,
+    orgName:"test",
+    orgAnnot:"test",
+    orgContacts:"test"
+}
 
 
 
@@ -24,6 +31,11 @@ export function OrgComponent(){
     },[]);
 
 
+
+    const createHandler = (org: IOrg)=>{
+        close()
+        OrgService.createOrg(org)
+    }
 
 
     return(
@@ -48,9 +60,12 @@ export function OrgComponent(){
                         <td>{org.orgContacts}</td>
                         <td>
                             <button className={btnClasses.join(' ')} style={{margin: "2px"}}
-                            onClick={()=> {setDetails(prev => !prev);
-                                OrgService.editOrg(org.orgId)}}
-                            >edit</button>
+                                    onClick={() => {
+                                        setDetails(prev => !prev);
+                                        OrgService.editOrg(org.orgId)
+                                    }}
+                            >edit
+                            </button>
                             <button className={btnClasses.join(' ')} style={{margin: "2px"}}
                                     onClick={() => {
                                         setDetails(prev => !prev);
@@ -63,10 +78,10 @@ export function OrgComponent(){
                 ))}
                 </tbody>
             </table>
-            {/*<Modal title="Aboba" onClose={close}/>*/}
-
-            {/*    </Modal>*/}
+            {modal && <Modal title="Aboba" onClose={close}><CreateOrg onCreate={createHandler}></CreateOrg></Modal>}
+               
             <button className="px-10 py-20" onClick={open}>Create new </button>
+            {/*<button className="px-10 py-20" onClick={()=>{OrgService.createOrg(example)}}>Create new</button>*/}
         </div>
     )
 }
