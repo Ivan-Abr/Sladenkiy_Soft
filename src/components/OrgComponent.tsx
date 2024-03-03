@@ -78,10 +78,10 @@ export function OrgComponent(){
                 ))}
                 </tbody>
             </table>
-            {modal && <Modal title="Aboba" onClose={close}><CreateOrg onCreate={createHandler}></CreateOrg></Modal>}
+            {/*{modal && <Modal title="Aboba" onClose={close}><CreateOrg onCreate={createHandler}></CreateOrg></Modal>}*/}
                
-            <button className="px-10 py-20" onClick={open}>Create new </button>
-            {/*<button className="px-10 py-20" onClick={()=>{OrgService.createOrg(example)}}>Create new</button>*/}
+            {/*<button className="px-10 py-20" onClick={open}>Create new </button>*/}
+            <button className="px-10 py-20" onClick={()=>{OrgService.createOrg(example)}}>Create new</button>
         </div>
     )
 }
