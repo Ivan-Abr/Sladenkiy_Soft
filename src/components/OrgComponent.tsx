@@ -31,6 +31,11 @@ export function OrgComponent(){
     },[]);
 
 
+    function refreshPage(){
+        window.location.reload();
+    }
+
+
 
     const createHandler = (org: IOrg)=>{
         close()
@@ -63,6 +68,7 @@ export function OrgComponent(){
                                     onClick={() => {
                                         setDetails(prev => !prev);
                                         OrgService.editOrg(org.orgId)
+                                        refreshPage()
                                     }}
                             >edit
                             </button>
@@ -70,6 +76,7 @@ export function OrgComponent(){
                                     onClick={() => {
                                         setDetails(prev => !prev);
                                         OrgService.deleteOrg(org.orgId)
+                                        refreshPage()
                                     }}
                             >delete
                             </button>
@@ -81,7 +88,8 @@ export function OrgComponent(){
             {/*{modal && <Modal title="Aboba" onClose={close}><CreateOrg onCreate={createHandler}></CreateOrg></Modal>}*/}
                
             {/*<button className="px-10 py-20" onClick={open}>Create new </button>*/}
-            <button className="px-10 py-20" onClick={()=>{OrgService.createOrg(example)}}>Create new</button>
+            <button className="px-10 py-20" onClick={()=>{OrgService.createOrg(example)
+                                                                            refreshPage()}}>Create new</button>
         </div>
     )
 }
