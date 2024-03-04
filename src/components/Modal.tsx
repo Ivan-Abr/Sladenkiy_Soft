@@ -1,25 +1,23 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
-interface ModalProps{
-    children: React.ReactNode
-    title: string
-    onClose:()=>void
+
+interface ModalType {
+    children?: ReactNode;
+    isOpen: boolean;
+    toggle: () => void;
 }
 
-export function Modal({children, title, onClose}: ModalProps){
-    return(
+export default function Modal(props: ModalType) {
+    return (
         <>
-            <div
-                className="fixed bg-black/50 top-0 right-0 left-0 bottom-0" onClick={onClose}
-            />
-            <div
-                className="w-[500px] p-5 rounded bg-white absolute top-10 left-1/2 -translate-x-1/2"
-            >
-                <h1 className="text-2xl text-center mb-2">{title}</h1>
-                {children}
-            </div>
+            {props.isOpen && (
+                <div className="modal-overlay">
+                    <div  className="modal-box">
+                        <button className="align-top align-content-lg-start" onClick={props.toggle}>Close</button>
+                        {props.children}
+                    </div>
+                </div>
+            )}
         </>
-    )
-
-
+    );
 }

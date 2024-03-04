@@ -2,9 +2,12 @@
 import React, {useContext, useEffect, useState} from "react";
 import OrgService from "../services/OrgService";
 import {IOrg} from "../models";
-import {Modal} from "./Modal";
 import {ModalContext} from "../context/ModalContext";
+import Modal from "./Modal";
+import useModal from "../hooks/useModal";
 import {CreateOrg} from "./CreateOrg";
+import {CreateNewOrg} from "./CreateNewOrg";
+
 
 
 const example: IOrg ={
@@ -22,6 +25,7 @@ export function OrgComponent(){
     const btnBgClassName = details? 'bg-grey': 'bg-white';
     const btnClasses = ['py-2 px-4 border-2', btnBgClassName]
     const {modal, open, close} = useContext(ModalContext)
+    const {isOpen, toggle} = useModal()
 
 
     useEffect(()=>{
@@ -36,10 +40,15 @@ export function OrgComponent(){
     }
 
 
+    function addOrg(org:IOrg){
+        setOrgs(prev =>[...prev, org])
+    }
+
 
     const createHandler = (org: IOrg)=>{
         close()
-        OrgService.createOrg(org)
+        addOrg(org)
+        refreshPage()
     }
 
 
@@ -86,10 +95,14 @@ export function OrgComponent(){
                 </tbody>
             </table>
             {/*{modal && <Modal title="Aboba" onClose={close}><CreateOrg onCreate={createHandler}></CreateOrg></Modal>}*/}
-               
+            {/*   <Modal/>*/}
             {/*<button className="px-10 py-20" onClick={open}>Create new </button>*/}
-            <button className="px-10 py-20" onClick={()=>{OrgService.createOrg(example)
-                                                                            refreshPage()}}>Create new</button>
+            <button onClick={toggle}> Create new</button>
+            <Modal isOpen={isOpen} toggle={toggle}>
+                <CreateNewOrg onCreate={createHandler}/>
+            </Modal>
+            {/*<button className="px-10 py-20" onClick={()=>{OrgService.createOrg(example)*/}
+            {/*                                                                refreshPage()}}>Create new</button>*/}
         </div>
     )
 }
