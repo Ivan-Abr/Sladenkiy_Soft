@@ -1,13 +1,9 @@
 import axios from "axios";
-import {IOrg} from "../models";
+import {IOrg, IOrgData} from "../models";
 
 const ORG_API_URL = 'http://localhost:8080/dm/v1/org';
 
-interface OrgData{
-    orgName: string;
-    orgAnnot: string;
-    orgContacts: string;
-}
+
 
 const names = ["Tarkov","Malenian","Maersk", "Jalopy","Kek"]
 const annots  = ["Transport","Producement","Medicine","Food","Military"]
@@ -19,11 +15,14 @@ const OrgService = {
         return axios.get(ORG_API_URL);
     },
 
-    editOrg:(orgId: number)=>{
-        const data: OrgData ={
-            orgName:names[Math.floor(Math.random() * names.length)],
-            orgAnnot:annots[Math.floor(Math.random() * annots.length)],
-            orgContacts:contacts[Math.floor(Math.random() * contacts.length)],
+    editOrg:(orgId: number, org:IOrgData)=>{
+        const data: IOrgData ={
+            orgName:org.orgName,
+                // names[Math.floor(Math.random() * names.length)],
+            orgAnnot:org.orgAnnot,
+                // annots[Math.floor(Math.random() * annots.length)],
+            orgContacts:org.orgContacts,
+                // contacts[Math.floor(Math.random() * contacts.length)],
         };
         return axios.put(ORG_API_URL+"/"+orgId, data);
     },

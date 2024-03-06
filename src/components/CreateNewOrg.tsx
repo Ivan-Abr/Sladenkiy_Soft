@@ -55,7 +55,7 @@ export function CreateNewOrg({onCreate}: CreateOrgProps){
     }
 
     return(
-        <form onSubmit={SubmitHandler}
+        <form onSubmit={SubmitHandler} className="mb-3"
         >
             <input
                 id = "name"
@@ -70,7 +70,7 @@ export function CreateNewOrg({onCreate}: CreateOrgProps){
                 id="annot"
                 type="text"
                 className={inputStyle}
-                placeholder="Enter organization annot"
+                placeholder="Enter organization annotation"
                 value={annot}
                 onChange={event => setAnnot(event.target.value)}
             ></input>
@@ -79,7 +79,7 @@ export function CreateNewOrg({onCreate}: CreateOrgProps){
                 id = "contacts"
                 type="text"
                 className={inputStyle}
-                placeholder="Enter organization annot"
+                placeholder="Enter organization contacts"
                 value={contacts}
                 onChange={event => setContacts(event.target.value)}
             ></input>

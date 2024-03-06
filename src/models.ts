@@ -4,3 +4,10 @@ export interface IOrg{
     orgAnnot: string;
     orgContacts: string;
 }
+
+
+export interface IOrgData{
+    orgName: string;
+    orgAnnot: string;
+    orgContacts: string;
+}
