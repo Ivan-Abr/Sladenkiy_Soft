@@ -7,6 +7,7 @@ import Modal from "./Modal";
 import useModal from "../hooks/useModal";
 import {CreateOrg} from "./CreateOrg";
 import {CreateNewOrg} from "./CreateNewOrg";
+import {EditOrg} from "./EditOrg";
 
 
 
@@ -21,11 +22,13 @@ const example: IOrg ={
 
 export function OrgComponent(){
     const [orgs, setOrgs] = useState<IOrg[]>([]);
-    const [details, setDetails] = useState(false)
+    const [details, setDetails] = useState(false);
     const btnBgClassName = details? 'bg-grey': 'bg-white';
     const btnClasses = ['py-2 px-4 border-2', btnBgClassName]
-    const {modal, open, close} = useContext(ModalContext)
-    const {isOpen, toggle} = useModal()
+    const {modal, open, close} = useContext(ModalContext);
+    const {isOpen, toggle} = useModal();
+    const [selectedId, setSelectedId] = useState<number>(0);
+    const [mode, setMode] = useState<"edit" | "create" | "delete">("edit")
 
 
     useEffect(()=>{
@@ -41,15 +44,47 @@ export function OrgComponent(){
 
 
     function addOrg(org:IOrg){
-        setOrgs(prev =>[...prev, org])
+        setOrgs(prev =>[...prev, org]);
+    }
+
+
+    function editOrg(org:IOrg){
+        const index = orgs.findIndex((o) => o.orgId === org.orgId);
+        if (index !== -1){
+            const updateOrgs = [...orgs];
+            updateOrgs[index] = org;
+            setOrgs(updateOrgs);
+        }
+
     }
 
 
     const createHandler = (org: IOrg)=>{
-        close()
-        addOrg(org)
-        refreshPage()
+        close();
+        addOrg(org);
+        refreshPage();
     }
+
+
+    const editHandler = (org: IOrg) =>{
+        close();
+        editOrg(org);
+        refreshPage();
+
+    }
+
+    function handleEditClick(orgId:number){
+        setSelectedId(orgId);
+        setMode("edit");
+        toggle();
+    }
+
+
+    function handleCreateClick(){
+        setMode("create");
+        toggle();
+    }
+
 
 
     return(
@@ -74,12 +109,7 @@ export function OrgComponent(){
                         <td>{org.orgContacts}</td>
                         <td>
                             <button className={btnClasses.join(' ')} style={{margin: "2px"}}
-                                    onClick={() => {
-                                        setDetails(prev => !prev);
-                                        OrgService.editOrg(org.orgId)
-                                        refreshPage()
-                                    }}
-                            >edit
+                                onClick={()=>handleEditClick(org.orgId)}>edit
                             </button>
                             <button className={btnClasses.join(' ')} style={{margin: "2px"}}
                                     onClick={() => {
@@ -94,15 +124,11 @@ export function OrgComponent(){
                 ))}
                 </tbody>
             </table>
-            {/*{modal && <Modal title="Aboba" onClose={close}><CreateOrg onCreate={createHandler}></CreateOrg></Modal>}*/}
-            {/*   <Modal/>*/}
-            {/*<button className="px-10 py-20" onClick={open}>Create new </button>*/}
-            <button onClick={toggle}> Create new</button>
-            <Modal isOpen={isOpen} toggle={toggle}>
-                <CreateNewOrg onCreate={createHandler}/>
+           <button onClick={()=>handleCreateClick()}> Create new</button>
+            <Modal isOpen={isOpen} toggle={toggle} mode={mode}>
+                {mode === "edit" ?(<EditOrg orgId={selectedId} onEdit={editHandler}/>):
+                    mode === "create" ?(<CreateNewOrg onCreate={createHandler}/>): (<p>Error</p>)}
             </Modal>
-            {/*<button className="px-10 py-20" onClick={()=>{OrgService.createOrg(example)*/}
-            {/*                                                                refreshPage()}}>Create new</button>*/}
         </div>
     )
 }
