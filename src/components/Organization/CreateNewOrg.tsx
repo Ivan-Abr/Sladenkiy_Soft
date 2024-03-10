@@ -1,8 +1,8 @@
 import React, {useState} from "react";
-import {IOrg} from "../models";
+import {IOrg} from "../../models";
 import axios from "axios";
-import OrgService from "../services/OrgService";
-import {ErrorMessage} from "./ErrorMessage";
+import OrgService from "../../services/OrgService";
+import {ErrorMessage} from "../ErrorMessage";
 
 const orgData: IOrg ={
     orgId:Math.random()*10 + 10,

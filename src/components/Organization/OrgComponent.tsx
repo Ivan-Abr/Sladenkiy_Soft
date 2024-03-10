@@ -1,22 +1,18 @@
 
 import React, {useContext, useEffect, useState} from "react";
-import OrgService from "../services/OrgService";
-import {IOrg} from "../models";
-import {ModalContext} from "../context/ModalContext";
-import Modal from "./Modal";
-import useModal from "../hooks/useModal";
-import {CreateOrg} from "./CreateOrg";
+import OrgService from "../../services/OrgService";
+import {IOrg} from "../../models";
+import {ModalContext} from "../../context/ModalContext";
+import Modal from "../Modal";
+import useModal from "../../hooks/useModal";
+
 import {CreateNewOrg} from "./CreateNewOrg";
 import {EditOrg} from "./EditOrg";
+import {DeleteOrg} from "./DeleteOrg";
 
 
 
-const example: IOrg ={
-    orgId:99,
-    orgName:"test",
-    orgAnnot:"test",
-    orgContacts:"test"
-}
+
 
 
 
@@ -58,6 +54,14 @@ export function OrgComponent(){
 
     }
 
+    function deleteOrg(org:IOrg){
+        const index = orgs.findIndex((o) => o.orgId === org.orgId);
+        if (index !== -1){
+            const updatedOrgs = orgs.filter((o) => o.orgId !== org.orgId);
+            setOrgs(updatedOrgs)
+        }
+    }
+
 
     const createHandler = (org: IOrg)=>{
         close();
@@ -73,6 +77,15 @@ export function OrgComponent(){
 
     }
 
+    const deleteHandler = (org: IOrg) =>{
+        close();
+        deleteOrg(org);
+        refreshPage()
+    }
+
+
+
+
     function handleEditClick(orgId:number){
         setSelectedId(orgId);
         setMode("edit");
@@ -85,12 +98,18 @@ export function OrgComponent(){
         toggle();
     }
 
+    function handleDeleteClick(orgId: number){
+        setSelectedId(orgId);
+        setMode("delete");
+        toggle();
+    }
+
 
 
     return(
         <div>
             <h3 className="text-lg-start">Organizations</h3>
-            <table className="table table-striped">
+            <table className="table table-bordered">
                 <thead>
                 <tr>
                     <td>Org Id</td>
@@ -112,11 +131,7 @@ export function OrgComponent(){
                                 onClick={()=>handleEditClick(org.orgId)}>edit
                             </button>
                             <button className={btnClasses.join(' ')} style={{margin: "2px"}}
-                                    onClick={() => {
-                                        setDetails(prev => !prev);
-                                        OrgService.deleteOrg(org.orgId)
-                                        refreshPage()
-                                    }}
+                                    onClick={()=>handleDeleteClick(org.orgId)}
                             >delete
                             </button>
                         </td>
@@ -127,7 +142,8 @@ export function OrgComponent(){
            <button onClick={()=>handleCreateClick()}> Create new</button>
             <Modal isOpen={isOpen} toggle={toggle} mode={mode}>
                 {mode === "edit" ?(<EditOrg orgId={selectedId} onEdit={editHandler}/>):
-                    mode === "create" ?(<CreateNewOrg onCreate={createHandler}/>): (<p>Error</p>)}
+                    mode === "create" ?(<CreateNewOrg onCreate={createHandler}/>):
+                mode === "delete" ? (<DeleteOrg orgId={selectedId} onDelete={deleteHandler}/>):(<p>Error</p>)}
             </Modal>
         </div>
     )

@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import {IOrg, IOrgData} from "../models";
-import OrgService from "../services/OrgService";
-import {ErrorMessage} from "./ErrorMessage";
+import {IOrg, IOrgData} from "../../models";
+import OrgService from "../../services/OrgService";
+import {ErrorMessage} from "../ErrorMessage";
 
 
 
