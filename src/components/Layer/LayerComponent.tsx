@@ -22,15 +22,15 @@ export function LayerComponent(){
             <h3 className="text-lg-start">Layers</h3>
             <table className="table table-bordered">
                 <thead>
-                    <tr>
-                        <td>Layer Id</td>
-                        <td>Layer Name</td>
-                        <td>Question Ids</td>
-                        <td></td>
-                    </tr>
+                <tr>
+                    <td>Layer Id</td>
+                    <td>Layer Name</td>
+                    <td>Question Ids</td>
+                    <td></td>
+                </tr>
                 </thead>
                 <tbody>
-                {layers.map(layer =>(
+                {layers.map(layer => (
                     <tr key={layer.layerId}>
                         <td>{layer.layerId}</td>
                         <td>{layer.layerName}</td>
@@ -43,6 +43,7 @@ export function LayerComponent(){
                 ))}
                 </tbody>
             </table>
+            {/*<button onClick={() =>  }> Create new</button>*/}
         </div>
     )
 }

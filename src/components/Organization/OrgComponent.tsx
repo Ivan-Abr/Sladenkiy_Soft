@@ -127,10 +127,10 @@ export function OrgComponent(){
                         <td>{org.orgAnnot}</td>
                         <td>{org.orgContacts}</td>
                         <td>
-                            <button className={btnClasses.join(' ')} style={{margin: "2px"}}
+                            <button className={btnClasses.join(' ')}
                                 onClick={()=>handleEditClick(org.orgId)}>edit
                             </button>
-                            <button className={btnClasses.join(' ')} style={{margin: "2px"}}
+                            <button className={btnClasses.join(' ')} 
                                     onClick={()=>handleDeleteClick(org.orgId)}
                             >delete
                             </button>
