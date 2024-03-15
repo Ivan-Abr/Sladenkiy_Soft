@@ -1,5 +1,5 @@
 import axios from "axios";
-import {ILayer, IOrg} from "../models";
+import {ILayer} from "../models";
 
 
 const LAYER_API_URL = 'http://localhost:8080/dm/v1/layer'

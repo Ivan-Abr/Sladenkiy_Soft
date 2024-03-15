@@ -16,3 +16,9 @@ export interface ILayer{
     layerName: string;
     
 }
+
+export interface IFactor{
+    factorId: number;
+    factorName: string;
+    factorShortName: string;
+}

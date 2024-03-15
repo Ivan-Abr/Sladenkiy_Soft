@@ -40,7 +40,7 @@ export function CreateNewLayer({onCreate}: createLayerProps){
                 id = "name"
                 type="text"
                 className={inputStyle}
-                placeholder="Enter organization value"
+                placeholder="Enter layer name"
                 value={value}
                 onChange={event => setValue(event.target.value)}
             />

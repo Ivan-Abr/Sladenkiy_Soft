@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {ILayer} from "../../models";
 import useModal from "../../hooks/useModal";
 import Modal from "../Modal";
@@ -7,13 +7,15 @@ import LayerService from "../../services/LayerService";
 import { CreateNewLayer } from "./CreateNewLayer";
 import { EditLayer } from "./EditLayer";
 import { DeleteLayer } from "./DeleteLayer";
+import {ModalContext} from "../../context/ModalContext";
 
 export function LayerComponent(){
     const [layers, setLayers] = useState<ILayer[]>([])
-    const[details, setDetails] = useState("false")
+    const {isOpen, toggle} = useModal();
+    const [details, setDetails] = useState(false);
     const btnBgClassName = details? 'bg-grey': 'bg-white';
     const btnClasses = ['py-2 px-4 border-2', btnBgClassName]
-    const {isOpen, toggle} = useModal();
+    const {modal, open, close} = useContext(ModalContext);
     const [selectedId, setSelectedId] = useState<number>(0);
     const [mode, setMode] = useState<"edit" | "create" | "delete">("edit")
 
@@ -56,19 +58,19 @@ export function LayerComponent(){
 
 
     const createHandler = (layer:ILayer)=>{
-        
+        close()
         addLayer(layer);
         refreshPage();
     }
 
     const editHandler = (layer: ILayer)=>{
-        //close();
+        close();
         editLayer(layer);
         refreshPage();
     }
 
     const deleteHandler = (layer: ILayer)=>{
-        //close()
+        close()
         deleteLayer(layer);
         refreshPage();
     }
@@ -78,6 +80,19 @@ export function LayerComponent(){
         setMode("create");
         toggle();
     }
+
+    function handleEditClick(layerId:number){
+        setSelectedId(layerId);
+        setMode("edit");
+        toggle();
+    }
+
+    function handleDeleteClick(layerId: number){
+        setSelectedId(layerId);
+        setMode("delete");
+        toggle();
+    }
+    
 
     return(
         <div>
@@ -96,8 +111,12 @@ export function LayerComponent(){
                         <td>{layer.layerId}</td>
                         <td>{layer.layerName}</td>
                         <td>
-                            <button>edit</button>
-                            <button>delete</button>
+                            <button className={btnClasses.join(' ')}
+                                    onClick={()=>handleEditClick(layer.layerId)}
+                            >edit</button>
+                            <button className={btnClasses.join(' ')}
+                                             onClick={()=>handleDeleteClick(layer.layerId)}
+                            >delete</button>
                         </td>
                     </tr>
                 ))}
@@ -105,9 +124,9 @@ export function LayerComponent(){
             </table>
             <button onClick={() => handleCreateClick()  }> Create new</button>
             <Modal isOpen={isOpen} toggle={toggle} mode={mode}>
-                {mode === "edit" ?(<EditLayer onEdit={editHandler} layerId={selectedId}/>):
+                {mode === "edit" ?(<EditLayer onEdit={editHandler} layerId={selectedId}/>):(
                     mode === "create" ?(<CreateNewLayer onCreate={createHandler}/>):
-                mode === "delete" ? (<DeleteLayer onDelete={deleteHandler} layerId={selectedId}/>):(<p>Error</p>)}
+                        (mode === "delete" ? (<DeleteLayer onDelete={deleteHandler} layerId={selectedId}/>):(<p>Error</p>)))}
             </Modal>
         </div>
     )
