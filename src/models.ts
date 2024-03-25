@@ -22,3 +22,20 @@ export interface IFactor{
     factorName: string;
     factorShortName: string;
 }
+
+export interface IFactorData{
+    factorName:string
+    factorShortName: string
+}
+
+export interface IMilestone{
+    milestoneId: number;
+    dateFrom: string;
+    dateTo: string;
+    year: string;}
+
+export interface IMilestoneData{
+    dateFrom: string;
+    dateTo: string;
+    year: string;
+}

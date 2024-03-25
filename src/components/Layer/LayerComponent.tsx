@@ -96,7 +96,7 @@ export function LayerComponent(){
 
     return(
         <div>
-            <h3 className="text-lg-start">Layers</h3>
+            {/*<h3 className="text-lg-start">Layers</h3>*/}
             <table className="table table-bordered">
                 <thead>
                 <tr>

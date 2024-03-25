@@ -1,11 +1,10 @@
 import React, {useState} from "react";
-import {IOrg} from "../../models";
+import {IOrg, IOrgData} from "../../models";
 import axios from "axios";
 import OrgService from "../../services/OrgService";
 import {ErrorMessage} from "../ErrorMessage";
 
-const orgData: IOrg ={
-    orgId:Math.random()*10 + 10,
+const orgData: IOrgData ={
     orgName:"",
     orgAnnot:"",
     orgContacts:""

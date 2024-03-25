@@ -11,28 +11,18 @@ const OrgService = {
         return axios.get(ORG_API_URL);
     },
 
-    editOrg:(orgId: number, org: IOrg)=>{
-        const data: IOrg ={
-            orgId:orgId,
-            orgName:org.orgName,
-            orgAnnot:org.orgAnnot,
-            orgContacts:org.orgContacts,
-        };
-        return axios.put(ORG_API_URL+"/"+orgId, data);
+    editOrg:(orgId: number, org: IOrgData)=>{
+
+        return axios.put(ORG_API_URL+"/"+orgId, org);
     },
 
     deleteOrg:(orgId:number)=>{
     return axios.delete(ORG_API_URL+"/"+orgId);
     },
 
-    createOrg:(org: IOrg)=>{
-        const data:IOrg ={
-          orgId:org.orgId,
-          orgName:org.orgName,
-          orgAnnot:org.orgAnnot,
-          orgContacts:org.orgContacts
-        };
-         return axios.post(ORG_API_URL, data)
+    createOrg:(org: IOrgData)=>{
+
+         return axios.post(ORG_API_URL, org)
     }
 
 };

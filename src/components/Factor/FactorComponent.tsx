@@ -96,7 +96,7 @@ export function FactorComponent(){
 
     return(
         <div>
-            <h3 className="text-lg-start">Factors</h3>
+            {/*<h3 className="text-lg-start">Factors</h3>*/}
             <table className="table table-bordered">
                 <thead>
                 <tr>
@@ -112,8 +112,14 @@ export function FactorComponent(){
                         <td>{factor.factorName}</td>
                         <td>{factor.factorShortName}</td>
                         <td>
-                            <button>edit</button>
-                            <button>delete</button>
+                            <button className={btnClasses.join(' ')}
+                                    onClick={() => handleEditClick(factor.factorId)}
+                            >edit
+                            </button>
+                            <button className={btnClasses.join(' ')}
+                                    onClick={() => handleDeleteClick(factor.factorId)}
+                            >delete
+                            </button>
                         </td>
                     </tr>
                 ))}

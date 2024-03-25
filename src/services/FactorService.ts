@@ -1,7 +1,7 @@
 import axios from "axios";
-import {IFactor} from "../models";
+import {IFactor, IFactorData} from "../models";
 
-const FACTOR_API_URL = 'http://localhost:8080/dm/v1/factor'
+const FACTOR_API_URL = 'http://localhost:8080/dm/v1/factor';
 
 const FactorService={
 
@@ -9,7 +9,7 @@ const FactorService={
         return axios.get(FACTOR_API_URL)
     },
 
-    editFactor:(factorId:number, factor: IFactor)=>{
+    editFactor:(factorId:number, factor: IFactorData)=>{
         const data: IFactor = {
             factorId: factorId,
             factorName: factor.factorName,
@@ -22,13 +22,8 @@ const FactorService={
         return axios.delete(FACTOR_API_URL+"/"+factorId)
     },
 
-    createFactor:(factor: IFactor)=>{
-        const data: IFactor = {
-            factorId: factor.factorId,
-            factorName: factor.factorName,
-            factorShortName:factor.factorShortName
-        }
-        return axios.put(FACTOR_API_URL, data)
+    createFactor:(factor: IFactorData)=>{
+        return axios.post(FACTOR_API_URL, factor)
     }
 }
 

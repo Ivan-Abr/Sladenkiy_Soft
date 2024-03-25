@@ -35,7 +35,7 @@ export function EditFactor({factorId, onEdit}: EditFactorProps){
             factorName: value,
             factorShortName: sname
         }
-        const response = await FactorService.createFactor(factorData)
+        const response = await FactorService.editFactor(factorId,factorData)
         onEdit(response.data)
     }
 
@@ -54,7 +54,7 @@ export function EditFactor({factorId, onEdit}: EditFactorProps){
                 type="text"
                 className={inputStyle}
                 placeholder="Enter factor shortname"
-                value={value}
+                value={sname}
                 onChange={event => setSname(event.target.value)}
             ></input>
             {error &&<ErrorMessage error={error}/>}

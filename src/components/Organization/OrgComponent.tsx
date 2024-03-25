@@ -108,7 +108,7 @@ export function OrgComponent(){
 
     return(
         <div>
-            <h3 className="text-lg-start">Organizations</h3>
+            {/*<h3 className="text-lg-start">Organizations</h3>*/}
             <table className="table table-bordered">
                 <thead>
                 <tr>
